@@ -1,0 +1,153 @@
+{
+  "name": "First AI Agent - GMAIL",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -336,
+        0
+      ],
+      "id": "b71a6ca1-1483-472d-b503-fbf10c05bb61",
+      "name": "When chat message received",
+      "webhookId": "d22ec92b-a504-4ed2-80c9-5a3a87ae89ab"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        192
+      ],
+      "id": "bb5be1ef-f46b-4295-bf22-4a4595e88af9",
+      "name": "Action",
+      "webhookId": "89e33575-7e56-4d39-b1ab-c0ba5412e7b1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pY8nHM136uEv5Z23",
+          "name": "theaiceo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        208
+      ],
+      "id": "bb2e6ab2-14fe-4faa-9f9b-888907ed2b2d",
+      "name": "BRAIN",
+      "credentials": {
+        "openAiApi": {
+          "id": "5Uc1rKZSZtfFJNx9",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -128,
+        0
+      ],
+      "id": "ec842bb9-5bad-4e2e-a96d-c00dbbf12eb2",
+      "name": "PERCEPTION"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -32,
+        208
+      ],
+      "id": "21612a8d-3c52-4696-8c0e-14c1579f2b2a",
+      "name": "Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "PERCEPTION",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Action": {
+      "ai_tool": [
+        [
+          {
+            "node": "PERCEPTION",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BRAIN": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "PERCEPTION",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "PERCEPTION",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "83db47c9-e92a-40d9-88ad-8800c1496fbe",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e4ba04d377b888c875d2adfa3d256b1635c2eb12b234903f0f6e364529c92666"
+  },
+  "nodeGroups": [],
+  "id": "pQ7rG8qUrnGsaKjp",
+  "tags": []
+}
